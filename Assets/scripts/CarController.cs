@@ -5,6 +5,7 @@ public class CarController : MonoBehaviour {
 
 	private Rigidbody2D rb;
 	private float speedForce = 15f;
+	private float brakingForce = -10f;
 	private float torqueForce = 200f;
 	private float driftFactorSticky = 0.65f;
 	private float driftFactorSlippy = 1f;
@@ -35,7 +36,13 @@ public class CarController : MonoBehaviour {
 			rb.AddForce (transform.up * speedForce);
 		}
 
-		float tf = Mathf.Lerp (0, torqueForce, rb.velocity.magnitude / 5);
+		if (Input.GetButton ("Brake")) {
+			rb.drag = 5f;
+		} else {
+			rb.drag = 1f;
+		}
+
+		float tf = Mathf.Lerp (0, torqueForce, rb.velocity.magnitude / 10);
 
 
 
