@@ -30,7 +30,7 @@ public class CarController : MonoBehaviour {
 
 		rb.velocity = ForwardVelocity () + RightVelocity() * driftFactor;
 
-		Debug.Log (RightVelocity ().magnitude);
+		// Debug.Log (RightVelocity ().magnitude);
 
 		if (Input.GetButton ("Accelerate")) {
 			rb.AddForce (transform.up * speedForce);
