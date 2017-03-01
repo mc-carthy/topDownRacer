@@ -1,9 +1,13 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 
 public class CheckpointManager : MonoBehaviour {
 
 	[SerializeField]
     private Checkpoint [] checkpoints;
+    [SerializeField]
+    private Text checkpointText;
+
 
     private int activeCheckpoint = 0;
 
@@ -18,6 +22,7 @@ public class CheckpointManager : MonoBehaviour {
     private void Start ()
     {
         checkpoints [activeCheckpoint].IsActiveCheckpoint = true;
+        UpdateCheckpointText ();
     }
 
     public void IncrementCheckpoint ()
@@ -31,6 +36,12 @@ public class CheckpointManager : MonoBehaviour {
         }
 
         checkpoints [activeCheckpoint].IsActiveCheckpoint = true;
+        UpdateCheckpointText ();
+    }
+
+    private void UpdateCheckpointText ()
+    {
+        checkpointText.text = "Checkpoint " + (activeCheckpoint + 1).ToString () + " of " + (checkpoints.Length + 1).ToString ();
     }
 
 }
