@@ -7,9 +7,15 @@ public class CheckpointManager : MonoBehaviour {
     private Checkpoint [] checkpoints;
     [SerializeField]
     private Text checkpointText;
-
+    [SerializeField]
+    private Text currentLaptimeText;
+    [SerializeField]
+    private Text bestLaptimeText;
 
     private int activeCheckpoint = 0;
+    private float startOfCurrentLapTime;
+    private float currentLaptime;
+    private float bestLaptime = float.MaxValue;
 
     private void Awake ()
     {
@@ -25,6 +31,12 @@ public class CheckpointManager : MonoBehaviour {
         UpdateCheckpointText ();
     }
 
+    private void Update ()
+    {
+        currentLaptime += Time.deltaTime;
+        UpdateLaptimeText ();
+    }
+
     public void IncrementCheckpoint ()
     {
         checkpoints [activeCheckpoint].IsActiveCheckpoint = false;
@@ -33,6 +45,7 @@ public class CheckpointManager : MonoBehaviour {
         if (activeCheckpoint >= checkpoints.Length)
         {
             activeCheckpoint = 0;
+            ResetLapTime ();
         }
 
         checkpoints [activeCheckpoint].IsActiveCheckpoint = true;
@@ -41,7 +54,22 @@ public class CheckpointManager : MonoBehaviour {
 
     private void UpdateCheckpointText ()
     {
-        checkpointText.text = "Checkpoint " + (activeCheckpoint + 1).ToString () + " of " + (checkpoints.Length + 1).ToString ();
+        checkpointText.text = "Checkpoint " + (activeCheckpoint + 1).ToString () + " of " + (checkpoints.Length).ToString ();
+    }
+
+    private void UpdateLaptimeText ()
+    {
+        currentLaptimeText.text = "Current lap : " + currentLaptime.ToString ("F2");
+    }
+
+    private void ResetLapTime ()
+    {
+        if (currentLaptime < bestLaptime)
+        {
+            bestLaptime = currentLaptime;
+            bestLaptimeText.text = "Best lap : " + bestLaptime.ToString ("F2");
+        }
+        currentLaptime = 0;
     }
 
 }
