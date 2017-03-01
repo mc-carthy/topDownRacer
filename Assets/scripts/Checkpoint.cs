@@ -46,9 +46,12 @@ public class Checkpoint : MonoBehaviour {
 
 	private void OnTriggerEnter2D (Collider2D other)
     {
-        if (other.gameObject.tag == "Player")
+        if (isActiveCheckpoint)
         {
-            checkMan.IncrementCheckpoint ();
+            if (other.gameObject.tag == "Player")
+            {
+                checkMan.IncrementCheckpoint ();
+            }
         }
     }
 
